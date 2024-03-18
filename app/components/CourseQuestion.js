@@ -155,13 +155,14 @@ const CourseQuestion = ({ params, onClick }) => {
     const question = findMatchCourse.questions[currentQuestion];
     return (
       <div>
-        <h2>{question.question}</h2>
-        <ul>
+        <h2 className="mb-2">{question.question}</h2>
+        <ul className="mb-8">
           {question.options.map((option, index) => (
-            <li key={index}>
+            <li key={index} className="mb-2">
               <input
                 type="radio"
                 value={index}
+				className="mr-2"
                 checked={selectedAnswers[currentQuestion] === index}
                 onChange={handleOptionChange}
               />
@@ -210,20 +211,22 @@ const CourseQuestion = ({ params, onClick }) => {
               )}
           </div>
         </form>
-        <div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
-          {nftImage ? ( // if nftImage exists, render image, otherwise render text
-            <img
-              width={300}
-              height={300}
-              src={nftImage}
-              className="rounded-lg border-2 border-gray-500"
-            />
-          ) : (
-            <p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
-              NFT Image Goes Here
-            </p>
-          )}
-        </div>
+        {nft ? (
+          <div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
+            {nftImage ? ( // if nftImage exists, render image, otherwise render text
+              <img
+                width={300}
+                height={300}
+                src={nftImage}
+                className="rounded-lg border-2 border-gray-500"
+              />
+            ) : (
+              <p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
+                NFT Image Goes Here
+              </p>
+            )}
+          </div>
+        ) : null}
         {outputs.map(({ dependency, href }, index) => (
           <div key={index}>
             {dependency && (
