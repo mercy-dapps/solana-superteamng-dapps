@@ -370,7 +370,7 @@ export const popularCourses = [
 		course_id: 8,
 		title: "Solana Course",
 		numOfChapters: 3,
-		hours: 1,
+		hours: 2,
 		level: "Beginner",
 		img: solana,
 		chapters: [
