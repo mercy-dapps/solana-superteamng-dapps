@@ -6,176 +6,176 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PrimaryButton, SecondaryButton } from "./Button";
 
 const CourseQuestion = ({ params, onClick }) => {
-  const { courses, updateCertificateLink } = useContext(ResourceContext);
+	const { courses, updateCertificateLink } = useContext(ResourceContext);
 
-  const findMatchCourse = courses.find(
-    (course) => course.course_id == params.id
-  );
+	const findMatchCourse = courses.find(
+		(course) => course.course_id == params.id
+	);
 
-  const nftImageUrl =
-    "https://media.istockphoto.com/id/1312924009/vector/professional-certificate-of-appreciation-golden-template-design.jpg?s=612x612&w=0&k=20&c=lM4Xf0JoWggAkuzw7youwvJBjw7hQUC2XZ9jF8vpLBk=";
-  const nftExternalUrl = "https://solana-superteamng-dapps.vercel.app";
+	const nftImageUrl =
+		"https://media.istockphoto.com/id/1312924009/vector/professional-certificate-of-appreciation-golden-template-design.jpg?s=612x612&w=0&k=20&c=lM4Xf0JoWggAkuzw7youwvJBjw7hQUC2XZ9jF8vpLBk=";
+	const nftExternalUrl = "https://solana-superteamng-dapps.vercel.app";
 
-  const [apiUrl, setApiUrl] = useState("");
-  const [nft, setNft] = useState(null);
-  const [nftImage, setNftImage] = useState("");
+	const [apiUrl, setApiUrl] = useState("");
+	const [nft, setNft] = useState(null);
+	const [nftImage, setNftImage] = useState("");
 
 	// get user info from wallet provider
 	const { connection } = useConnection();
 	const { publicKey } = useWallet();
 
-  // create compressed nft
-  const mintCompressedNft = async (event) => {
-    // prevent react app from resetting
-    event.preventDefault();
+	// create compressed nft
+	const mintCompressedNft = async (event) => {
+		// prevent react app from resetting
+		event.preventDefault();
 
-    // make api call to create cNFT
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: "helius-fe-course",
-        method: "mintCompressedNft",
-        params: {
-          name: `${findMatchCourse.certificate.name}`,
-          symbol: `${findMatchCourse.certificate.symbol}`,
-          owner: publicKey,
-          description: `${findMatchCourse.certificate.description}`,
-          attributes: [
-            {
-              trait_type: "Cool Courses",
-              value: "Learn Web3 made easy!",
-            },
-          ],
-          imageUrl: nftImageUrl,
-          externalUrl: nftExternalUrl,
-          sellerFeeBasisPoints: 6900,
-        },
-      }),
-    });
+		// make api call to create cNFT
+		const response = await fetch(apiUrl, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				jsonrpc: "2.0",
+				id: "helius-fe-course",
+				method: "mintCompressedNft",
+				params: {
+					name: `${findMatchCourse.certificate.name}`,
+					symbol: `${findMatchCourse.certificate.symbol}`,
+					owner: publicKey,
+					description: `${findMatchCourse.certificate.description}`,
+					attributes: [
+						{
+							trait_type: "Cool Courses",
+							value: "Learn Web3 made easy!",
+						},
+					],
+					imageUrl: nftImageUrl,
+					externalUrl: nftExternalUrl,
+					sellerFeeBasisPoints: 6900,
+				},
+			}),
+		});
 
-    const { result } = await response.json();
+		const { result } = await response.json();
 
-    if (!result) {
-      toast.error("Request failed");
-      throw "Request failed";
-    }
+		if (!result) {
+			toast.error("Request failed");
+			throw "Request failed";
+		}
 
-    setNft(result.assetId);
+		setNft(result.assetId);
 
-    fetchNFT(result.assetId, event);
-  };
+		fetchNFT(result.assetId, event);
+	};
 
-  // fetch nft after it's minted
-  const fetchNFT = async (assetId, event) => {
-    // prevent app from reloading
-    event.preventDefault();
+	// fetch nft after it's minted
+	const fetchNFT = async (assetId, event) => {
+		// prevent app from reloading
+		event.preventDefault();
 
-    // api call to fetch nft
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "applicaiton/json",
-      },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: "my-id",
-        method: "getAsset",
-        params: {
-          id: assetId,
-        },
-      }),
-    });
+		// api call to fetch nft
+		const response = await fetch(apiUrl, {
+			method: "POST",
+			headers: {
+				"Content-Type": "applicaiton/json",
+			},
+			body: JSON.stringify({
+				jsonrpc: "2.0",
+				id: "my-id",
+				method: "getAsset",
+				params: {
+					id: assetId,
+				},
+			}),
+		});
 
-    // extrapolate api response
-    const { result } = await response.json();
+		// extrapolate api response
+		const { result } = await response.json();
 
-    // set nft image in state variable
-    setNftImage(result.content.links.image);
+		// set nft image in state variable
+		setNftImage(result.content.links.image);
 
-    // return api result
-    return { result };
-  };
+		// return api result
+		return { result };
+	};
 
-  // display function outputs to ui
-  const outputs = [
-    {
-      title: "Asset ID...",
-      dependency: nft,
-      href: `https://xray.helius.xyz/token/${nft}?network=devnet`,
-    },
-  ];
+	// display function outputs to ui
+	const outputs = [
+		{
+			title: "Asset ID...",
+			dependency: nft,
+			href: `https://xray.helius.xyz/token/${nft}?network=devnet`,
+		},
+	];
 
-  // set api url onload
-  useEffect(() => {
-    setApiUrl(
-      connection?.rpcEndpoint.includes("devnet")
-        ? "https://devnet.helius-rpc.com/?api-key=91186518-dcf4-4225-aab8-873e54679040"
-        : "https://mainnet.helius-rpc.com/?api-key=91186518-dcf4-4225-aab8-873e54679040"
-    );
-  }, [connection]);
+	// set api url onload
+	useEffect(() => {
+		setApiUrl(
+			connection?.rpcEndpoint.includes("devnet")
+				? "https://devnet.helius-rpc.com/?api-key=91186518-dcf4-4225-aab8-873e54679040"
+				: "https://mainnet.helius-rpc.com/?api-key=91186518-dcf4-4225-aab8-873e54679040"
+		);
+	}, [connection]);
 
-  useEffect(() => {
-    if (nft) {
-      updateCertificateLink(
-        `https://xray.helius.xyz/token/${nft}?network=devnet`,
-        findMatchCourse.course_id
-      );
-    }
-  }, [nft]);
+	useEffect(() => {
+		if (nft) {
+			updateCertificateLink(
+				`https://xray.helius.xyz/token/${nft}?network=devnet`,
+				findMatchCourse.course_id
+			);
+		}
+	}, [nft]);
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState(
-    new Array(findMatchCourse.questions?.length).fill(null)
-  );
-  const [score, setScore] = useState(0);
+	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [selectedAnswers, setSelectedAnswers] = useState(
+		new Array(findMatchCourse.questions?.length).fill(null)
+	);
+	const [score, setScore] = useState(0);
 
-  const handleOptionChange = (event) => {
-    const newSelectedAnswers = [...selectedAnswers];
-    newSelectedAnswers[currentQuestion] = parseInt(event.target.value);
-    setSelectedAnswers(newSelectedAnswers);
-  };
+	const handleOptionChange = (event) => {
+		const newSelectedAnswers = [...selectedAnswers];
+		newSelectedAnswers[currentQuestion] = parseInt(event.target.value);
+		setSelectedAnswers(newSelectedAnswers);
+	};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const answer = selectedAnswers[currentQuestion];
-    if (answer === findMatchCourse.questions[currentQuestion].answer) {
-      setScore(score + 1);
-    }
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const answer = selectedAnswers[currentQuestion];
+		if (answer === findMatchCourse.questions[currentQuestion].answer) {
+			setScore(score + 1);
+		}
 
-    if (currentQuestion + 1 < findMatchCourse.questions.length) {
-      setCurrentQuestion(currentQuestion + 1);
-    }
-  };
+		if (currentQuestion + 1 < findMatchCourse.questions.length) {
+			setCurrentQuestion(currentQuestion + 1);
+		}
+	};
 
-  const renderQuestion = () => {
-    const question = findMatchCourse.questions[currentQuestion];
-    return (
-      <div>
-        <h2>{question.question}</h2>
-        <ul>
-          {question.options.map((option, index) => (
-            <li key={index}>
-              <input
-                type="radio"
-                value={index}
-                checked={selectedAnswers[currentQuestion] === index}
-                onChange={handleOptionChange}
-              />
-              {option}
-            </li>
-          ))}
-        </ul>
+	const renderQuestion = () => {
+		const question = findMatchCourse.questions[currentQuestion];
+		return (
+			<div>
+				<h2>{question.question}</h2>
+				<ul>
+					{question.options.map((option, index) => (
+						<li key={index}>
+							<input
+								type="radio"
+								value={index}
+								checked={selectedAnswers[currentQuestion] === index}
+								onChange={handleOptionChange}
+							/>
+							{option}
+						</li>
+					))}
+				</ul>
 
-        <PrimaryButton text={"Submit Answer"} onClick={handleSubmit} />
-      </div>
-    );
-  };
+				<PrimaryButton text={"Submit Answer"} onClick={handleSubmit} />
+			</div>
+		);
+	};
 
-  return (
+	return (
 		<div className="backdrop-blur bg-[#00000047] fixed inset-x-0 inset-y-0 mx-auto w-full ">
 			<div className="mx-auto w-[50%] h-[70%] my-16 bg-white p-10 flex flex-col rounded-lg">
 				<p
@@ -196,7 +196,7 @@ const CourseQuestion = ({ params, onClick }) => {
 						</div>
 					)}
 					{currentQuestion + 1 === findMatchCourse.questions.length && (
-						<p className="py-2">
+						<p>
 							Your score is {score} out of{" "}
 							{findMatchCourse.questions.length}{" "}
 						</p>
@@ -259,7 +259,7 @@ const CourseQuestion = ({ params, onClick }) => {
 				))}
 			</div>
 		</div>
-  );
+	);
 };
 
 export default CourseQuestion;
