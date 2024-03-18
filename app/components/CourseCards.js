@@ -9,7 +9,7 @@ const CourseCard = ({ course }) => {
 				<hr></hr>
 				<div className="flex flex-row gap-3 text-sm items-center justify-between">
 					<div className="flex flex-row gap-3 items-center">
-						<p className="">2hrs</p>
+						<p className="">{course.hours} hrs</p>
 						<p className="">{course.numOfChapters} Chapters</p>
 					</div>
 					<p className="bg-[#e0e3ff] p-2 rounded text-[#3443cd] font-medium text-xs">

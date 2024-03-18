@@ -24,18 +24,18 @@ const Footer = () => {
 
 							<Link
 								className="hover:text-primaryYellow"
-								href="/information"
+								href="/"
 							>
 								Industry News
 							</Link>
 
-							<Link className="hover:text-primaryYellow" href="/shop">
+							<Link className="hover:text-primaryYellow" href="/">
 								Tools
 							</Link>
 
 							<Link
 								className="hover:text-primaryYellow"
-								href="/terms-of-service"
+								href="/"
 							>
 								Events
 							</Link>
@@ -57,13 +57,13 @@ const Footer = () => {
 								Courses
 							</Link>
 
-							<Link className="hover:text-primaryYellow" href="/shop">
+							<Link className="hover:text-primaryYellow" href="/">
 								Community
 							</Link>
-							<Link className="hover:text-primaryYellow" href="/shop">
+							<Link className="hover:text-primaryYellow" href="/">
 								Blogs
 							</Link>
-							<Link className="hover:text-primaryYellow" href="/shop">
+							<Link className="hover:text-primaryYellow" href="/">
 								FAQs
 							</Link>
 						</div>
@@ -80,11 +80,11 @@ const Footer = () => {
 								Privacy Policy
 							</Link>
 
-							<Link className="hover:text-primaryYellow" href="/course">
+							<Link className="hover:text-primaryYellow" href="/">
 								Terms of Use
 							</Link>
 
-							<Link className="hover:text-primaryYellow" href="/shop">
+							<Link className="hover:text-primaryYellow" href="/">
 								Disclaimer
 							</Link>
 						</div>
@@ -100,7 +100,7 @@ const Footer = () => {
 
 							<Link
 								className="hover:text-primaryYellow"
-								href="/information"
+								href="/"
 							>
 								info@studyweb3.com
 							</Link>
