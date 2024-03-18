@@ -176,84 +176,89 @@ const CourseQuestion = ({ params, onClick }) => {
   };
 
   return (
-    <div className="backdrop-blur fixed inset-x-0 inset-y-0 mx-auto w-full">
-      <div className="mx-auto w-[50%] h-[80%] bg-white p-10">
-        <p onClick={onClick} className="font-bold cursor-pointer py-2">
-          X
-        </p>
-        <form>
-          <h2 className="text-2xl font-semibold py-3">Course Questions</h2>
-          {score != findMatchCourse.questions.length && (
-            <div>
-              {currentQuestion < findMatchCourse.questions.length ? (
-                renderQuestion()
-              ) : (
-                <p>You finished the quiz!</p>
-              )}
-            </div>
-          )}
-          {currentQuestion + 1 === findMatchCourse.questions.length && (
-            <p>
-              Your score is {score} out of {findMatchCourse.questions.length}{" "}
-            </p>
-          )}
-          <div className="flex flex-row items-center gap-4">
-            {score === findMatchCourse.questions.length && (
-              <PrimaryButton
-                text={"Get Certificate"}
-                onClick={(event) => mintCompressedNft(event)}
-              />
-            )}
-            {score < findMatchCourse.questions.length &&
-              currentQuestion + 1 === findMatchCourse.questions.length && (
-                <SecondaryButton text={"Retake"} />
-              )}
-          </div>
-        </form>
-        <div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
-          {nftImage ? ( // if nftImage exists, render image, otherwise render text
-            <img
-              width={300}
-              height={300}
-              src={nftImage}
-              className="rounded-lg border-2 border-gray-500"
-            />
-          ) : (
-            <p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
-              NFT Image Goes Here
-            </p>
-          )}
-        </div>
-        {outputs.map(({ dependency, href }, index) => (
-          <div key={index}>
-            {dependency && (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex text-[#80ebff] italic hover:text-white transition-all duration-200"
-              >
-                {dependency.toString().slice(0, 25)}...
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                  />
-                </svg>
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+		<div className="backdrop-blur bg-[#00000047] fixed inset-x-0 inset-y-0 mx-auto w-full ">
+			<div className="mx-auto w-[50%] h-[70%] my-16 bg-white p-10 flex flex-col rounded-lg">
+				<p
+					onClick={onClick}
+					className="font-medium rounded-full px-2 border text-[#373636] border-[#373636] self-end cursor-pointer py-1 text-sm"
+				>
+					X
+				</p>
+				<form>
+					<h2 className="text-2xl font-semibold py-3">Course Questions</h2>
+					{score != findMatchCourse.questions.length && (
+						<div>
+							{currentQuestion < findMatchCourse.questions.length ? (
+								renderQuestion()
+							) : (
+								<p>You finished the quiz!</p>
+							)}
+						</div>
+					)}
+					{currentQuestion + 1 === findMatchCourse.questions.length && (
+						<p>
+							Your score is {score} out of{" "}
+							{findMatchCourse.questions.length}{" "}
+						</p>
+					)}
+					<div className="flex flex-row items-center gap-4">
+						{score === findMatchCourse.questions.length && (
+							<PrimaryButton
+								text={"Get Certificate"}
+								onClick={(event) => mintCompressedNft(event)}
+							/>
+						)}
+						{score < findMatchCourse.questions.length &&
+							currentQuestion + 1 ===
+								findMatchCourse.questions.length && (
+								<SecondaryButton text={"Retake"} />
+							)}
+					</div>
+				</form>
+				<div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
+					{nftImage ? ( // if nftImage exists, render image, otherwise render text
+						<img
+							width={300}
+							height={300}
+							src={nftImage}
+							className="rounded-lg border-2 border-gray-500"
+						/>
+					) : (
+						<p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
+							NFT Image Goes Here
+						</p>
+					)}
+				</div>
+				{outputs.map(({ dependency, href }, index) => (
+					<div key={index}>
+						{dependency && (
+							<a
+								href={href}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex text-[#80ebff] italic hover:text-white transition-all duration-200"
+							>
+								{dependency.toString().slice(0, 25)}...
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth={1.5}
+									stroke="currentColor"
+									className="w-6 h-6"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+									/>
+								</svg>
+							</a>
+						)}
+					</div>
+				))}
+			</div>
+		</div>
   );
 };
 
