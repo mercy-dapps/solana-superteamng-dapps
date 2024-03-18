@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { coursesAvailable } from "../data";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
-const CourseQuestion = ({params}) => {
-
+const CourseQuestion = ({ params }) => {
   const findMatchCourse = coursesAvailable.find(
     (course) => course.course_id == params.id
   );
@@ -38,14 +37,14 @@ const CourseQuestion = ({params}) => {
         id: "helius-fe-course",
         method: "mintCompressedNft",
         params: {
-          name: "Nathan's Second cNFT",
-          symbol: "NNFT",
+          name: `${findMatchCourse.certificate.name}`,
+          symbol: `${findMatchCourse.certificate.symbol}`,
           owner: publicKey,
-          description: "Nathan's Super cool NFT",
+          description: `${findMatchCourse.certificate.description}`,
           attributes: [
             {
-              trait_type: "Cool Factor",
-              value: "Super",
+              trait_type: "Cool Courses",
+              value: "Learn Web3 made easy!",
             },
           ],
           imageUrl: nftImageUrl,
