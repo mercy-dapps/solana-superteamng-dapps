@@ -455,6 +455,3 @@ export const popularCourses = [
   },
 ];
 
-const persistedData = localStorage.getItem("appState");
-
-export const data = persistedData ? JSON.parse(persistedData) : popularCourses;

@@ -1,11 +1,18 @@
 "use client";
 
 import { createContext, useState } from "react";
-import { data } from "../data";
+import { popularCourses } from "../data";
 
 export const ResourceContext = createContext();
 
 export const ResourceContextProvider = ({ children }) => {
+  const persistedData =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("appState")
+      : "[]";
+
+  const data = persistedData ? JSON.parse(persistedData) : popularCourses;
+
   const [courses, setCourses] = useState(data);
 
   const updateCertificateLink = (link, id) => {
