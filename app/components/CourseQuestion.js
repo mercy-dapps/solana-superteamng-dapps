@@ -1,21 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { coursesAvailable } from "../data";
+import { useState, useEffect, useContext } from "react";
+import { ResourceContext } from "../context/resourceContext";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PrimaryButton, SecondaryButton } from "./Button";
 
 const CourseQuestion = ({ params, onClick }) => {
-  const findMatchCourse = coursesAvailable.find(
+  const { courses, updateCertificateLink } = useContext(ResourceContext);
+
+  const findMatchCourse = courses.find(
     (course) => course.course_id == params.id
   );
 
   const nftImageUrl =
     "https://media.istockphoto.com/id/1312924009/vector/professional-certificate-of-appreciation-golden-template-design.jpg?s=612x612&w=0&k=20&c=lM4Xf0JoWggAkuzw7youwvJBjw7hQUC2XZ9jF8vpLBk=";
-  const nftExternalUrl = "https://mercy-portfolio.vercel.app";
+  const nftExternalUrl = "https://solana-superteamng-dapps.vercel.app";
 
   const [apiUrl, setApiUrl] = useState("");
-  const [nft, setNft] = useState("");
+  const [nft, setNft] = useState(null);
   const [nftImage, setNftImage] = useState("");
 
   // get user info from wallet provider
@@ -54,6 +56,8 @@ const CourseQuestion = ({ params, onClick }) => {
         },
       }),
     });
+
+    const { result } = await response.json();
 
     if (!result) {
       toast.error("Request failed");
@@ -114,6 +118,15 @@ const CourseQuestion = ({ params, onClick }) => {
     );
   }, [connection]);
 
+  useEffect(() => {
+    if (nft) {
+      updateCertificateLink(
+        `https://xray.helius.xyz/token/${nft}?network=devnet`,
+        findMatchCourse.course_id
+      );
+    }
+  }, [nft]);
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState(
     new Array(findMatchCourse.questions?.length).fill(null)
@@ -136,9 +149,6 @@ const CourseQuestion = ({ params, onClick }) => {
     if (currentQuestion + 1 < findMatchCourse.questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     }
-    // else {
-    //   alert(`Your score is ${score} out of ${findMatchCourse.questions.length}`);
-    // }
   };
 
   const renderQuestion = () => {
@@ -194,9 +204,10 @@ const CourseQuestion = ({ params, onClick }) => {
                 onClick={(event) => mintCompressedNft(event)}
               />
             )}
-            {score < findMatchCourse.questions.length && (
-              <SecondaryButton text={"Retake"} />
-            )}
+            {score < findMatchCourse.questions.length &&
+              currentQuestion + 1 === findMatchCourse.questions.length && (
+                <SecondaryButton text={"Retake"} />
+              )}
           </div>
         </form>
         <div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
