@@ -23,7 +23,7 @@ const CourseSection = () => {
 				{popularCourses.map((course, index) => (
 					<Link
 						href={`/course/${course.course_id}`}
-						className="rounded-lg shadow-xl"
+						className="rounded-lg shadow"
 						key={course.course_id}
 					>
 						<CourseCard course={course} key={index} />

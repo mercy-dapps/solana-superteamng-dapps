@@ -20,9 +20,9 @@ const CourseQuestion = ({ params, onClick }) => {
   const [nft, setNft] = useState(null);
   const [nftImage, setNftImage] = useState("");
 
-  // get user info from wallet provider
-  const { connection } = useConnection();
-  const { publicKey } = useWallet();
+	// get user info from wallet provider
+	const { connection } = useConnection();
+	const { publicKey } = useWallet();
 
   // create compressed nft
   const mintCompressedNft = async (event) => {
@@ -196,7 +196,7 @@ const CourseQuestion = ({ params, onClick }) => {
 						</div>
 					)}
 					{currentQuestion + 1 === findMatchCourse.questions.length && (
-						<p>
+						<p className="py-2">
 							Your score is {score} out of{" "}
 							{findMatchCourse.questions.length}{" "}
 						</p>
