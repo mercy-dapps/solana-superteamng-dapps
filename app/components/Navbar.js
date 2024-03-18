@@ -1,16 +1,49 @@
 "use client";
 
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import logo from "../../public/logo.png";
 
 const Navbar = () => {
-  return (
-    <nav className="p-4 flex justify-between items-center shadow-2xl bg-slate-100">
-      <a href="/">
-          <h3>Logo</h3>
-      </a>
-      <WalletMultiButton className="!bg-purple-600 hover:bg-black transition-all duration-200 rounded-lg" />
-    </nav>
-  );
+const pathname = usePathname();
+
+	return (
+		<nav className="p-4 lg:px-16 sticky top-0 flex justify-between items-center shadow bg-white">
+			<a href="/" className="w-[15%]">
+				<Image src={logo} />
+			</a>
+			<div>
+				<ul className="flex flex-row gap-8">
+					<li>
+						<a
+							href="/"
+							className={
+								pathname === "/"
+									? "text-[#3443cd] font-medium"
+									: "text-black"
+							}
+						>
+							Home
+						</a>
+					</li>
+					<li>
+						<a
+							href="/course"
+							className={
+								pathname === "/course"
+									? "text-[#3443cd] font-medium"
+									: "text-black"
+							}
+						>
+							Courses
+						</a>
+					</li>
+				</ul>
+			</div>
+			<WalletMultiButton className="!bg-purple-600 hover:bg-black transition-all duration-200 rounded-lg" />
+		</nav>
+	);
 };
 
 export default Navbar;
