@@ -11,7 +11,7 @@ const course = () => {
 			<div className="flex flex-col gap-3">
 				<h2 className="text-4xl font-semibold">Courses Available</h2>
 				<p className="w-[55%] font-light">
-					Welcome! We are here to make learning web3 lots more fun. Think
+					Welcome! We are here to make learning web3 a lot more fun. Think
 					about us as the freecodecamp version of web3
 				</p>
 				<div>

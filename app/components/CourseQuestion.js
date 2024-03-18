@@ -17,15 +17,21 @@ const CourseQuestion = ({ params, onClick }) => {
 	const [apiUrl, setApiUrl] = useState("");
 	const [nft, setNft] = useState("");
 	const [nftImage, setNftImage] = useState("");
+	const [showCert, setShowCert] = useState(false);
 
 	// get user info from wallet provider
 	const { connection } = useConnection();
 	const { publicKey } = useWallet();
 
+	const showCertificate = () => {
+		setShowCert(!showCert);
+	};
+
 	// create compressed nft
 	const mintCompressedNft = async (event) => {
 		// prevent react app from resetting
 		event.preventDefault();
+		setShowCert(true);
 
 		// make api call to create cNFT
 		const response = await fetch(apiUrl, {
@@ -95,6 +101,8 @@ const CourseQuestion = ({ params, onClick }) => {
 		// set nft image in state variable
 		setNftImage(result.content.links.image);
 
+		showCertificate();
+
 		// return api result
 		return { result };
 	};
@@ -162,16 +170,19 @@ const CourseQuestion = ({ params, onClick }) => {
 						</li>
 					))}
 				</ul>
-			
+
 				<PrimaryButton text={"Get Certificate"} onClick={handleSubmit} />
 			</div>
 		);
 	};
 
 	return (
-		<div className="backdrop-blur fixed inset-x-0 inset-y-0 mx-auto w-full">
-			<div className="mx-auto w-[50%] h-[80%] bg-white p-10">
-				<p onClick={onClick} className="font-bold cursor-pointer py-2">
+		<div className="backdrop-blur bg-[#0000005a] fixed inset-x-0 inset-y-0 mx-auto w-full">
+			<div className="mx-auto my-14 rounded-lg w-[50%] h-[80%] bg-white p-10 flex flex-col ">
+				<p
+					onClick={onClick}
+					className="font-medium text-sm rounded-full border cursor-pointer py-1 px-2 self-end"
+				>
 					X
 				</p>
 				<form>
@@ -186,37 +197,40 @@ const CourseQuestion = ({ params, onClick }) => {
 						</div>
 					)}
 					{currentQuestion + 1 === findMatchCourse.questions.length && (
-						<p>
+						<p className="py-2">
 							Your score is {score} out of{" "}
 							{findMatchCourse.questions.length}{" "}
 						</p>
 					)}
-					<div className="flex flex-row items-center gap-4">
-						{score === findMatchCourse.questions.length && (
-							<PrimaryButton
-								text={"Get Certificate"}
-								onClick={(event) => mintCompressedNft(event)}
-							/>
-						)}
-						{score < findMatchCourse.questions.length && (
-							<SecondaryButton text={"Retake"} />
-						)}
-					</div>
 				</form>
-				<div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
-					{nftImage ? ( // if nftImage exists, render image, otherwise render text
-						<img
-							width={300}
-							height={300}
-							src={nftImage}
-							className="rounded-lg border-2 border-gray-500"
+				<div className="flex flex-row items-center gap-4">
+					{score === findMatchCourse.questions.length && (
+						<PrimaryButton
+							text={"Get Certificate"}
+							onClick={(event) => mintCompressedNft(event)}
 						/>
-					) : (
-						<p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
-							NFT Image Goes Here
-						</p>
+					)}
+					{score < findMatchCourse.questions.length && (
+						<SecondaryButton text={"Retake"} />
 					)}
 				</div>
+				{showCert && (
+					<div className="mt-8 bg-[#222524] border-2 border-gray-500 rounded-lg p-4 h-[300px] flex justify-center items-center">
+						{nftImage ? ( // if nftImage exists, render image, otherwise render text
+							<img
+								width={300}
+								height={300}
+								src={nftImage}
+								className="rounded-lg border-2 border-gray-500"
+							/>
+						) : (
+							<p className="border-2 border-gray-500 text-gray-500 p-2 rounded-lg">
+								NFT Image Goes Here
+							</p>
+						)}
+					</div>
+				)}
+
 				{outputs.map(({ dependency, href }, index) => (
 					<div key={index}>
 						{dependency && (
