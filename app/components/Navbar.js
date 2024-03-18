@@ -9,7 +9,7 @@ const Navbar = () => {
 const pathname = usePathname();
 
 	return (
-		<nav className="p-4 lg:px-16 sticky top-0 flex justify-between items-center shadow bg-white">
+		<nav className="p-3 lg:px-16 sticky top-0 flex justify-between items-center shadow bg-white">
 			<a href="/" className="w-[15%]">
 				<Image src={logo} />
 			</a>
@@ -37,6 +37,30 @@ const pathname = usePathname();
 							}
 						>
 							Courses
+						</a>
+					</li>
+					<li>
+						<a
+							href="/"
+							// className={
+							// 	pathname === "/course"
+							// 		? "text-[#3443cd] font-medium"
+							// 		: "text-black"
+							// }
+						>
+							Community
+						</a>
+					</li>
+					<li>
+						<a
+							href="/"
+							// className={
+							// 	pathname === "/course"
+							// 		? "text-[#3443cd] font-medium"
+							// 		: "text-black"
+							// }
+						>
+							Resources
 						</a>
 					</li>
 				</ul>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { coursesAvailable } from "../data";
+import { popularCourses } from "../data";
 import CourseCard from "../components/CourseCards";
 
 const course = () => {
@@ -11,12 +11,12 @@ const course = () => {
 			<div className="flex flex-col gap-3">
 				<h2 className="text-4xl font-semibold">Courses Available</h2>
 				<p className="w-[55%] font-light">
-					Welcome! We are here to make learning web3 lots more fun. Think
+					Welcome! We are here to make learning web3 a lot more fun. Think
 					about us as the freecodecamp version of web3
 				</p>
 				<div>
 					<div className="w-fit mx-auto my-12 grid-cols-1 md:grid-cols-2 grid xl:grid-cols-3 gap-16  text-black">
-						{coursesAvailable.map((course, index) => (
+						{popularCourses.map((course, index) => (
 							<Link
 								href={`/course/${course.course_id}`}
 								className="rounded-lg shadow-xl"

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { popularCourses } from "../data";
-import CourseCard from "../components/CourseCards";
+import CourseCard from "./CourseCards";
 import { PrimaryButton } from "./Button";
 
 const CourseSection = () => {
@@ -20,10 +20,10 @@ const CourseSection = () => {
 				</p>
 			</div>
 			<div className="w-fit mx-auto my-12 grid-cols-1 md:grid-cols-2 grid xl:grid-cols-3 gap-16  text-black">
-				{popularCourses.map((course, index) => (
+				{popularCourses.slice(0, 6).map((course, index) => (
 					<Link
 						href={`/course/${course.course_id}`}
-						className="rounded-lg shadow-xl"
+						className="rounded-lg shadow"
 						key={course.course_id}
 					>
 						<CourseCard course={course} key={index} />

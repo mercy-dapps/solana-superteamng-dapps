@@ -162,7 +162,7 @@ const CourseQuestion = ({ params, onClick }) => {
               <input
                 type="radio"
                 value={index}
-				className="mr-2"
+                className="mr-2"
                 checked={selectedAnswers[currentQuestion] === index}
                 onChange={handleOptionChange}
               />
@@ -177,9 +177,12 @@ const CourseQuestion = ({ params, onClick }) => {
   };
 
   return (
-    <div className="backdrop-blur fixed inset-x-0 inset-y-0 mx-auto w-full">
-      <div className="mx-auto w-[50%] h-[80%] bg-white p-10">
-        <p onClick={onClick} className="font-bold cursor-pointer py-2">
+    <div className="backdrop-blur bg-[#00000047] fixed inset-x-0 inset-y-0 mx-auto w-full ">
+      <div className="mx-auto w-[50%] h-[70%] my-16 bg-white p-10 flex flex-col rounded-lg">
+        <p
+          onClick={onClick}
+          className="font-medium rounded-full px-2 border text-[#373636] border-[#373636] self-end cursor-pointer py-1 text-sm"
+        >
           X
         </p>
         <form>
