@@ -10,7 +10,7 @@ const course = () => {
 		<section className="p-5 py-12 lg:px-20 lg:py-20 flex flex-col gap-5 lg:gap-7">
 			<div className="flex flex-col gap-3">
 				<h2 className="text-4xl font-semibold">Courses Available</h2>
-				<p className="w-[55%] font-light">
+				<p className="w-[80%] md:w-[55%] font-light">
 					Welcome! We are here to make learning web3 a lot more fun. Think
 					about us as the freecodecamp version of web3
 				</p>

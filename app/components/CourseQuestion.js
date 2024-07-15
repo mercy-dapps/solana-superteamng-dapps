@@ -131,6 +131,7 @@ const CourseQuestion = ({ params, onClick }) => {
   const [selectedAnswers, setSelectedAnswers] = useState(
     new Array(findMatchCourse.questions?.length).fill(null)
   );
+  const [questionAnswered, setQuestionAnswered] = useState(0);
   const [score, setScore] = useState(0);
 
   const handleOptionChange = (event) => {
@@ -139,8 +140,7 @@ const CourseQuestion = ({ params, onClick }) => {
     setSelectedAnswers(newSelectedAnswers);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const answer = selectedAnswers[currentQuestion];
     if (answer === findMatchCourse.questions[currentQuestion].answer) {
       setScore(score + 1);
@@ -171,14 +171,22 @@ const CourseQuestion = ({ params, onClick }) => {
           ))}
         </ul>
 
-        <PrimaryButton text={"Submit Answer"} onClick={handleSubmit} />
+        <PrimaryButton
+          text={"Submit Answer"}
+          onClick={(e) => {
+            e.preventDefault();
+
+            setQuestionAnswered((r) => r + 1);
+            handleSubmit();
+          }}
+        />
       </div>
     );
   };
 
   return (
-    <div className="backdrop-blur bg-[#00000047] fixed inset-x-0 inset-y-0 mx-auto w-full ">
-      <div className="mx-auto w-[50%] h-[70%] my-16 bg-white p-10 flex flex-col rounded-lg">
+    <div className="backdrop-blur bg-[#00000047] fixed inset-x-0 inset-y-0 mx-auto w-full z-50">
+      <div className="mx-auto w-[50%] h-[75%] h-max-[80%] my-16 bg-white p-10 flex flex-col rounded-lg">
         <p
           onClick={onClick}
           className="font-medium rounded-full px-2 border text-[#373636] border-[#373636] self-end cursor-pointer py-1 text-sm"
@@ -196,7 +204,7 @@ const CourseQuestion = ({ params, onClick }) => {
               )}
             </div>
           )}
-          {currentQuestion + 1 === findMatchCourse.questions.length && (
+          {questionAnswered === findMatchCourse.questions.length && (
             <p>
               Your score is {score} out of {findMatchCourse.questions.length}{" "}
             </p>
@@ -209,7 +217,7 @@ const CourseQuestion = ({ params, onClick }) => {
               />
             )}
             {score < findMatchCourse.questions.length &&
-              currentQuestion + 1 === findMatchCourse.questions.length && (
+              questionAnswered === findMatchCourse.questions.length && (
                 <SecondaryButton text={"Retake"} />
               )}
           </div>

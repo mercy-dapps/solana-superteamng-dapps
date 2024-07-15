@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { popularCourses } from "../data";
 import CourseCard from "./CourseCards";
 import { PrimaryButton } from "./Button";
@@ -11,7 +10,7 @@ const CourseSection = () => {
 		<section className="p-5 py-12 lg:px-20 lg:py-20 flex flex-col gap-5 lg:gap-7">
 			<div className="flex flex-col gap-3">
 				<h2 className="text-4xl font-semibold">Popular Courses</h2>
-				<p className="w-[55%] font-light">
+				<p className="w-[80%] md:w-[55%] font-light">
 					Discover our curated selection of popular courses designed to
 					empower you with essential skills and knowledge for navigating
 					the Web3 landscape. Whether you're starting your journey or

@@ -6,8 +6,8 @@ import { PrimaryButton } from "./Button.js";
 const Hero = () => {
 	return (
 		<section className="py-8 lg:py-16 ">
-			<div className="flex flex-row gap-2 items-center justify-between px-4 lg:px-20 lg:pt-12">
-				<div className="flex flex-col gap-4 lg:gap-6 items-start justify-center w-[48%]">
+			<div className="md:flex flex-row gap-2 items-center mx-auto md:justify-between px-4 lg:px-20 lg:pt-12">
+				<div className="flex flex-col gap-4 lg:gap-6 items-start justify-center w-[80%] md:w-[48%] mx-auto">
 					<h1 className=" text-[1.7rem] lg:text-[3.7rem] w-full lg:w-[100%] lg:leading-[4rem] font-semibold">
 						Learn Web3 with
 						<span className="text-[#3443cd]"> StudyWeb3</span>
@@ -26,7 +26,7 @@ const Hero = () => {
 					</div>
 				</div>
 
-				<div className="w-[48%]">
+				<div className="w-[80%] md:w-[48%] mx-auto">
 					<Image src={heroImg} className="w-[100%]" />
 				</div>
 			</div>

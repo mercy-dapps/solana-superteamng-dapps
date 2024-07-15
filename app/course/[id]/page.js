@@ -4,12 +4,14 @@ import { useState, useContext } from "react";
 import { ResourceContext } from "@/app/context/resourceContext";
 
 import { PrimaryButton } from "@/app/components/Button";
+import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import Image from "next/image";
 import CourseQuestion from "@/app/components/CourseQuestion";
 
 const page = ({ params }) => {
   const { courses } = useContext(ResourceContext);
+  const { publicKey } = useWallet();
 
   const findMatchCourse = courses.find(
     (course) => course.course_id == params.id
@@ -19,11 +21,11 @@ const page = ({ params }) => {
 
   return (
     <section className="lg:px-20 relative gap-5 lg:gap-14">
-      <div className="flex p-5 py-12 lg:py-20 flex-row gap-5 lg:gap-14">
-        <div className="w-1/2">
+      <div className="md:flex p-5 py-12 lg:py-20 flex-row gap-12 lg:gap-14">
+        <div className="md:w-1/2">
           <Image src={findMatchCourse?.img} className="rounded w-full h-full" />
         </div>
-        <div className="flex flex-col justify-between gap-3">
+        <div className="flex flex-col justify-between gap-3 mt-8 md:mt-0">
           <h2 className="text-4xl font-semibold">{findMatchCourse?.title}</h2>
           <ul>
             {findMatchCourse?.chapters.map((mod) => (
@@ -45,7 +47,9 @@ const page = ({ params }) => {
           {findMatchCourse?.certificate_link == "" ? (
             <PrimaryButton
               text="Mark as Completed"
-              onClick={() => setCompleted(true)}
+              onClick={() =>
+                publicKey ? setCompleted(true) : alert("Connect your wallet!")
+              }
             />
           ) : (
             <a href={findMatchCourse?.certificate_link} target="_blank">

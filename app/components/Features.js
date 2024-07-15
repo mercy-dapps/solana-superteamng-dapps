@@ -15,7 +15,7 @@ const Features = () => {
 					more confident about your web3 skills
 				</p>
 			</div>
-			<div className=" grid-cols-1 md:grid-cols-4 grid gap-12 text-black">
+			<div className=" grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid gap-12 text-black">
 				<div className="bg-[#e0e3ff] p-4 py-8 rounded-lg flex flex-col justify-between gap-8">
 					<Image src={edu} className="w-[15%]" />
 					<h4>Course Recommendations</h4>
